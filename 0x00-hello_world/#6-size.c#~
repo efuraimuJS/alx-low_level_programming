@@ -1,0 +1,11 @@
+#include <stdio.h>
+
+int main(void)
+{
+  printf("Size of a char: %d byte(s)", typeof(char))
+  printf("Size of a char: %d byte(s)", typeof(int))
+  printf("Size of a char: %d byte(s)", typeof(long int))
+  printf("Size of a char: %d byte(s)", typeof(long long int))
+  printf("Size of a char: %d byte(s)", typeof(float))
+  return (0);
+}
