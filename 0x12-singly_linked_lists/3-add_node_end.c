@@ -1,49 +1,79 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include "lists.h"
-#include <string.h>
 
 /**
- * add_node_end - function that adds a new node at the end of a list_t list
- * @head: input header pointer
- * @str: Input string value
- * Return: the address of the new element, or NULL if it failed
+ * add_node_end - function with two arguments
+ * @head: pointer to struct of linked list
+ * @str: char type pointer to string
+ *
+ * Description: adds a new node at the end of linked list
+ * Return: address of new element
  */
-
 list_t *add_node_end(list_t **head, const char *str)
 {
-	list_t *node;
-	list_t *tmp;
+	int count = 0;
+	list_t *end_node, *cursor;
 
-	node = malloc(sizeof(list_t));
-	if (node == NULL)
+	end_node = malloc(sizeof(list_t));
+	if (end_node == NULL)
 		return (NULL);
-	node->len = _strlen(str);
-	node->str = strdup(str);
-	node->next = NULL;
-	if (*head == NULL)
-		*head = node;
+
+	if (str)
+	{
+		end_node->str = _strdup(str);
+		while (str[count] != '\0')
+			count++;
+		end_node->len = count;
+	}
 	else
 	{
-		tmp = *head;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = node;
+		end_node->str = NULL;
+		end_node->len = 0;
 	}
-	return (node);
+	end_node->next = NULL;
+	if (*head)
+	{
+	cursor = *head;
+	while (cursor->next != NULL)
+		cursor = cursor->next;
+	cursor->next = end_node;
+	}
+	else
+		*head = end_node;
+	return (end_node);
 }
 
 /**
- * _strlen - returns length of string
- * @s: character of string
- * Return: length of string
+ * *_strdup - function with one argument
+ * @str: string argument
+ *
+ * Description: returns a pointer to allocated space in memory
+ * Return: pointer
  */
-
-int _strlen(const char *s)
+char *_strdup(const char *str)
 {
-	int i;
+	int i, j;
+	char *ptr;
 
-	while (s[i] != 0)
+	if (str == NULL)
+		return (NULL);
+	i = 0;
+	while (*(str + i) != '\0')
+	{
 		i++;
-	return (i);
+	}
+
+	ptr = malloc(sizeof(char) * i + 1);
+
+	if (ptr == NULL)
+		return (NULL);
+
+	j = 0;
+	while (str[j] != '\0')
+	{
+		ptr[j] = str[j];
+		j++;
+	}
+	ptr[j] = '\0';
+	return (ptr);
 }
